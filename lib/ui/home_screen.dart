@@ -64,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: _onResetButtonTap,
             child: Text('Reset'),
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(Colors.red),
@@ -94,30 +94,43 @@ class _HomeScreenState extends State<HomeScreen> {
           this.color = Colors.brown;
           count++;
         });
+        locator<SharedPreferencesHelper>().saveLastBirdColor('brown');
         break;
       case 'Grey':
         setState(() {
           this.color = Colors.grey;
           count++;
         });
+        locator<SharedPreferencesHelper>().saveLastBirdColor('grey');
         break;
       case 'Black':
         setState(() {
           this.color = Colors.black;
           count++;
         });
+        locator<SharedPreferencesHelper>().saveLastBirdColor('black');
         break;
       case 'Orange':
         setState(() {
           this.color = Colors.orange;
           count++;
         });
+        locator<SharedPreferencesHelper>().saveLastBirdColor('orange');
         break;
       default:
         setState(() {
           this.color = Colors.blue;
         });
     }
+    locator<SharedPreferencesHelper>().saveBirdCount(this.count);
+  }
+
+  void _onResetButtonTap() {
+    setState(() {
+      this.color = Colors.blue;
+      this.count = 0;
+    });
+    locator<SharedPreferencesHelper>().deleteAllData();
   }
 
   Future<Null> _getSharedPrefs() async {

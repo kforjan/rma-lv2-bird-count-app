@@ -11,16 +11,16 @@ class SharedPreferencesHelper {
   Future<void> saveLastBirdColor(String color) async {
     final _prefs = await SharedPreferences.getInstance();
     switch (color) {
-      case 'Brown':
+      case 'brown':
         _prefs.setString('color', 'brown');
         break;
-      case 'Grey':
+      case 'grey':
         _prefs.setString('color', 'grey');
         break;
-      case 'Black':
+      case 'black':
         _prefs.setString('color', 'black');
         break;
-      case 'Orange':
+      case 'orange':
         _prefs.setString('color', 'orange');
         break;
       default:
