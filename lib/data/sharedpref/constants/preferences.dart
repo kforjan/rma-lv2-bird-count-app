@@ -1,6 +1,6 @@
 class Preferences {
   Preferences._();
 
-  static const birdCount = 'birdCount';
-  static const lastColor = 'lastColor';
+  static const count = 'count';
+  static const color = 'color';
 }
