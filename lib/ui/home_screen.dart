@@ -87,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  _onIncrementButtonTap(String color) {
+  void _onIncrementButtonTap(String color) {
     switch (color) {
       case 'Brown':
         setState(() {
