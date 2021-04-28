@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rma_lv3_bird_counting_app/ui/home_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -7,6 +8,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Bird Counter',
+      home: HomeScreen(),
     );
   }
 }
