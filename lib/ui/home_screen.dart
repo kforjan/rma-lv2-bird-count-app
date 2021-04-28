@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:rma_lv3_bird_counting_app/locators.dart';
+import '../data/sharedpref/shared_preferences_helper.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key}) : super(key: key);
@@ -8,6 +10,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int count;
+  Color color;
+
+  @override
+  void initState() {
+    super.initState();
+    _getSharedPrefs();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,9 +29,29 @@ class _HomeScreenState extends State<HomeScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Center(
-            child: Text(
-              '0',
-              style: TextStyle(fontSize: 60),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                height: 100,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: color,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(20),
+                  ),
+                ),
+                child: count == null
+                    ? Center(
+                        child: CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation(Colors.white)),
+                      )
+                    : Center(
+                        child: Text(
+                          count.toString(),
+                          style: TextStyle(fontSize: 60, color: Colors.white),
+                        ),
+                      ),
+              ),
             ),
           ),
           Row(
@@ -33,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: _onResetButtonTap,
             child: Text('Reset'),
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(Colors.red),
@@ -46,11 +77,67 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildIncrementButton(String text, Color color) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: () {
+        _onIncrementButtonTap(text);
+      },
       child: Text(text),
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all(color),
       ),
     );
+  }
+
+  void _onIncrementButtonTap(String color) {
+    switch (color) {
+      case 'Brown':
+        setState(() {
+          this.color = Colors.brown;
+          count++;
+        });
+        locator<SharedPreferencesHelper>().saveLastBirdColor('brown');
+        break;
+      case 'Grey':
+        setState(() {
+          this.color = Colors.grey;
+          count++;
+        });
+        locator<SharedPreferencesHelper>().saveLastBirdColor('grey');
+        break;
+      case 'Black':
+        setState(() {
+          this.color = Colors.black;
+          count++;
+        });
+        locator<SharedPreferencesHelper>().saveLastBirdColor('black');
+        break;
+      case 'Orange':
+        setState(() {
+          this.color = Colors.orange;
+          count++;
+        });
+        locator<SharedPreferencesHelper>().saveLastBirdColor('orange');
+        break;
+      default:
+        setState(() {
+          this.color = Colors.blue;
+        });
+    }
+    locator<SharedPreferencesHelper>().saveBirdCount(this.count);
+  }
+
+  void _onResetButtonTap() {
+    setState(() {
+      this.color = Colors.blue;
+      this.count = 0;
+    });
+    locator<SharedPreferencesHelper>().deleteAllData();
+  }
+
+  Future<Null> _getSharedPrefs() async {
+    final data = await locator<SharedPreferencesHelper>().getStoredBirdData();
+    setState(() {
+      count = data['count'];
+      color = data['color'];
+    });
   }
 }
