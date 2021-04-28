@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:rma_lv3_bird_counting_app/locators.dart';
 import 'package:rma_lv3_bird_counting_app/ui/home_screen.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  setup();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
