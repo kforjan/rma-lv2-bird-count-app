@@ -65,4 +65,9 @@ class SharedPreferencesHelper {
         break;
     }
   }
+
+  Future<void> deleteAllData() async {
+    final _prefs = await SharedPreferences.getInstance();
+    _prefs.clear();
+  }
 }
